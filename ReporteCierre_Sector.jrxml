@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteCierre_Sector" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="424eac34-7c8d-40d6-9726-1666e799df32">
+	<property name="ireport.zoom" value="1.436352296214985"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="229"/>
+	<style name="table" mode="Transparent">
+		<box>
+			<pen lineWidth="0.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Transparent" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Transparent" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Transparent" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="0.0" lineColor="#999999"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Transparent" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.0" lineColor="#999999"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Transparent" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.0" lineColor="#999999"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Transparent" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.0" lineColor="#999999"/>
+		</box>
+	</style>
+	<subDataset name="Dataset_1" uuid="e1571d05-f54a-4c94-b44b-4b9e14dde69d">
+		<parameter name="totalEfectivo" class="java.lang.Double" isForPrompting="false"/>
+		<field name="name" class="java.lang.String"/>
+		<field name="price" class="java.lang.Double"/>
+		<variable name="totalGastos" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{price}]]></variableExpression>
+			<initialValueExpression><![CDATA[new java.lang.Double(0.0)]]></initialValueExpression>
+		</variable>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\labs\\ReportesTPV\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CodigoDia" class="java.lang.Integer"/>
+	<parameter name="ItemDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[CALL `dbsempresas`.`cierre_sector`($P{CodigoDia});]]>
+	</queryString>
+	<field name="labelSector" class="java.lang.String"/>
+	<field name="labelEfectivo" class="java.lang.String"/>
+	<field name="numeroFacturasEfectivo" class="java.lang.Long"/>
+	<field name="efectivo" class="java.lang.String"/>
+	<field name="labelVisa" class="java.lang.String"/>
+	<field name="numeroFacturasVisa" class="java.lang.Long"/>
+	<field name="visa" class="java.lang.String"/>
+	<field name="labelOtro" class="java.lang.String"/>
+	<field name="numeroFacturasOtro" class="java.lang.Long"/>
+	<field name="otro" class="java.lang.String"/>
+	<field name="labelTotal" class="java.lang.String"/>
+	<field name="total" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="TOTAL_EFECTIVO" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new java.lang.Double($F{efectivo})]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_VISA" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[new java.lang.Double($F{visa})]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_INGRESOS" class="java.lang.Double">
+		<variableExpression><![CDATA[new java.lang.Double($F{efectivo}) + new java.lang.Double($F{visa})]]></variableExpression>
+	</variable>
+	<group name="SectorGroup">
+		<groupExpression><![CDATA[$F{labelSector}]]></groupExpression>
+		<groupHeader>
+			<band height="116">
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="0" width="278" height="116" uuid="a10f1b0d-98a8-48e6-a21e-c6a537a4224a"/>
+					<graphicElement>
+						<pen lineWidth="1.5" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="278" y="0" width="276" height="116" uuid="ee6d0481-cedd-42cd-90a9-cb50113869dd"/>
+					<graphicElement>
+						<pen lineWidth="1.5" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="278" y="0" width="177" height="20" uuid="42143a4c-f857-4500-bb9a-8a5a296d95d3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[AREA DE INFORMACION]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Transparent" x="0" y="0" width="180" height="30" backcolor="#FFFFFF" uuid="e96c4780-b0de-4d67-bf00-2bc51bccd833"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{labelSector}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="0" y="70" width="179" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="1f8a432d-2159-45e8-a771-f0f9be924faf"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{labelOtro}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.0 ¤ ">
+					<reportElement x="203" y="30" width="75" height="20" uuid="497f03ce-b65b-4d64-9e0a-4c1f4a231168"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="9" isBold="true"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.lang.Double($F{efectivo})]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="0" y="90" width="203" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="c3d84ce8-7f43-474e-b940-ee0a7a1309b6"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{labelTotal}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.0 ¤ " isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="203" y="90" width="75" height="25" forecolor="#000000" backcolor="#FFFFFF" uuid="479d3f2f-0053-4d55-ba81-749b8b72bfba"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Arial" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.lang.Double($F{total})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="30" width="179" height="20" uuid="a341f404-27cf-4fc2-8619-4e3fcd3750b2"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{labelEfectivo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="179" y="70" width="24" height="20" uuid="e24a8561-cbe1-42a0-903c-a533ca98d11d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{numeroFacturasOtro}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.0 ¤ ">
+					<reportElement x="203" y="50" width="75" height="20" uuid="1c7f1bcb-e4f2-445f-8930-48648f8b62c9"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="9" isBold="true"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.lang.Double($F{visa})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="179" y="50" width="24" height="20" uuid="25ce890f-76aa-42c2-8b46-5dc217c82e00"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{numeroFacturasVisa}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.0 ¤ ">
+					<reportElement x="203" y="70" width="75" height="20" uuid="6b971a93-3ee3-469b-ac31-b74826a1dee0"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="9" isBold="true"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.lang.Double($F{otro})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="179" y="0" width="25" height="30" backcolor="#FFFFFF" uuid="fd264333-b354-4829-b3a3-b544abf36e01"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Nº]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="50" width="179" height="20" uuid="f0e6e0d2-cc91-4c62-86c5-ed15b884e4ac"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{labelVisa}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="179" y="30" width="24" height="20" uuid="ff4b2f3b-e8a1-49ff-9b8e-4c5bda0edd01"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{numeroFacturasEfectivo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="203" y="0" width="75" height="30" backcolor="#FFFFFF" uuid="4298988a-51e5-4f91-9e1a-54856d9acdec"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<text><![CDATA[CANTIDAD]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="203" y="0" width="75" height="30" forecolor="#999999" uuid="f9bcbf96-e188-43ab-b0c2-77181bf43153"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="179" y="0" width="24" height="30" forecolor="#999999" uuid="66ada246-54fd-4607-8322-a3278f318898"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="0" width="179" height="30" forecolor="#999999" uuid="a0c0f75e-80fe-404a-8653-4475a0fd7b21"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="203" y="30" width="75" height="20" forecolor="#999999" uuid="eda1031d-5f9b-4b64-b458-13ac645eb1c4"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="203" y="50" width="75" height="20" forecolor="#999999" uuid="d6820e56-76ea-43b3-9a97-e1e650198704"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="203" y="70" width="75" height="20" forecolor="#999999" uuid="e7cb78e1-de79-4749-8b98-7bedec38d359"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="203" y="90" width="75" height="25" forecolor="#999999" uuid="4ccb81fe-e846-402d-af49-2eb3608a9cc3"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="1" y="90" width="202" height="25" forecolor="#999999" uuid="adec50ac-7730-4b3a-855a-546c34b2cda6"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="179" y="30" width="24" height="20" forecolor="#999999" uuid="be114999-3904-4fe4-a334-8f7b56b24b64"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="179" y="50" width="24" height="20" forecolor="#999999" uuid="0c0bbc03-91d0-4ac6-a370-2f511b658aa7"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="179" y="70" width="24" height="20" forecolor="#999999" uuid="d6846674-7186-4a09-80e4-1cfcc7c8ed09"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="30" width="179" height="20" forecolor="#999999" uuid="b6ed0148-4168-450d-8e37-6ca19cf99550"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="50" width="179" height="20" forecolor="#999999" uuid="8a92d4a0-31ba-4de7-b876-7a8b80ceb08a"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="70" width="179" height="20" forecolor="#999999" uuid="51e60bdf-f145-45f1-80d1-94712352b65a"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="277" height="22" backcolor="#FFFF99" uuid="bc4ce049-c84a-4406-94c5-09a37ca02aa4"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="18" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[CIERRE DE CAJA Y PAGOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="278" y="0" width="277" height="22" backcolor="#CCFFCC" uuid="12b59160-4712-42ce-8054-9766a0878def"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="18" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[H.I.D. del Dia ____/____/_____]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="278" height="22" uuid="edb0e957-cc33-4358-ac47-74db514f387e"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="278" y="0" width="276" height="22" uuid="75087e29-5139-43c8-b347-3f1d7491ce30"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<summary>
+		<band height="295">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="278" height="60" uuid="106f13be-cf3f-42b8-a8bf-c5e51dd989d7"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="40" width="202" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="bf212357-d8a6-4099-83b0-0fd5f1491adf"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[TOTAL INGR. DE HOY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="20" width="202" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="25d6deaf-c9c5-4c60-a580-f36cf3ff0138"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[INGRESADO EN VISAS
+]]></text>
+			</staticText>
+			<textField pattern="#,##0.0 ¤ " isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="203" y="40" width="75" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="895aacc0-ea8c-49c6-a858-3d47c29f3f0a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_INGRESOS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0 ¤ " isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="203" y="0" width="75" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="86e2d7df-f857-497b-bbfa-feb42c6d6d0e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_EFECTIVO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0 ¤ " isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="203" y="20" width="75" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9f6161bf-c463-47a6-8956-6cfb29dae872"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_VISA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="204" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="950ae538-f0fc-4a3b-9d04-53aa711b24d4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[INGRESADO EN EFECTIVO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="203" y="0" width="75" height="20" forecolor="#999999" uuid="c6bf9044-711c-4394-9f0a-c4f19c47e3ec"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1" y="0" width="202" height="20" forecolor="#999999" uuid="d5ebfa39-891b-48a4-9205-1c2c8458078e"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="1" y="20" width="202" height="20" forecolor="#999999" uuid="5d5ed937-d030-4d49-ae7d-6aa7f2745650"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="203" y="20" width="75" height="20" forecolor="#999999" uuid="c0543538-41b7-45fd-8ff5-d4dd836564b5"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="203" y="40" width="75" height="20" forecolor="#999999" uuid="42dcb9fd-b1b0-4909-b819-756e6687f2f2"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<componentElement>
+				<reportElement key="table 1" style="table 1" mode="Transparent" x="-1" y="60" width="280" height="184" isPrintWhenDetailOverflows="true" uuid="0f371be1-ca5b-4def-a1c0-e3201a986bf5"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="Dataset_1" uuid="add9cbaf-7570-408b-8ef2-f43f3e227b53">
+						<datasetParameter name="totalEfectivo">
+							<datasetParameterExpression><![CDATA[$V{TOTAL_EFECTIVO}]]></datasetParameterExpression>
+						</datasetParameter>
+						<dataSourceExpression><![CDATA[$P{ItemDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:columnGroup width="279" uuid="f37c982b-6208-4a59-927b-1529215d810c">
+						<jr:tableHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="279" height="30" forecolor="#000000" backcolor="#FFFFFF" uuid="95c2fea9-4942-45f6-8ff9-16ce244e8f29"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+									<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single" leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[GASTOS PAGADOS DE CAJA]]></text>
+							</staticText>
+							<line>
+								<reportElement mode="Transparent" x="278" y="0" width="1" height="30" uuid="a84e5ca4-c438-44bc-a1f1-b4ae6e0d366a"/>
+								<graphicElement>
+									<pen lineWidth="1.5"/>
+								</graphicElement>
+							</line>
+							<line>
+								<reportElement mode="Transparent" x="1" y="0" width="1" height="30" uuid="73d6606b-0970-4360-b442-7bae27c17eff"/>
+								<graphicElement>
+									<pen lineWidth="1.5"/>
+								</graphicElement>
+							</line>
+						</jr:tableHeader>
+						<jr:column width="202" uuid="5e2c4aff-3017-4b68-8847-0f2a5d910f89">
+							<jr:tableFooter height="30" rowSpan="1">
+								<staticText>
+									<reportElement mode="Transparent" x="0" y="0" width="202" height="28" forecolor="#000000" backcolor="#FFFFFF" uuid="847ac90b-60c7-4322-bbb8-84a969933349"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+										<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+										<paragraph lineSpacing="Single" leftIndent="5"/>
+									</textElement>
+									<text><![CDATA[ENTREGAR EN EFECTIVO]]></text>
+								</staticText>
+								<line>
+									<reportElement mode="Transparent" x="1" y="0" width="1" height="28" uuid="c1431392-441d-4bc8-963d-0bf53576b516"/>
+									<graphicElement>
+										<pen lineWidth="1.5"/>
+									</graphicElement>
+								</line>
+								<rectangle>
+									<reportElement mode="Transparent" x="2" y="0" width="200" height="28" uuid="2d643e31-728e-492b-9c03-eb16a923bc85"/>
+									<graphicElement>
+										<pen lineWidth="0.5" lineColor="#999999"/>
+									</graphicElement>
+								</rectangle>
+								<line>
+									<reportElement mode="Transparent" x="1" y="28" width="201" height="1" uuid="2e22ebe2-dd27-4fe9-87fd-2882046fd666"/>
+									<graphicElement>
+										<pen lineWidth="1.5"/>
+									</graphicElement>
+								</line>
+							</jr:tableFooter>
+							<jr:columnFooter height="30" rowSpan="1">
+								<staticText>
+									<reportElement mode="Transparent" x="2" y="0" width="200" height="30" forecolor="#000000" backcolor="#FFFFFF" uuid="0742364b-add3-478f-8ecb-0dec5953cffd"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+										<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+										<paragraph lineSpacing="Single" leftIndent="5"/>
+									</textElement>
+									<text><![CDATA[TOTAL PAGOS POR CAJA]]></text>
+								</staticText>
+								<rectangle>
+									<reportElement mode="Transparent" x="2" y="0" width="200" height="30" uuid="719f1006-5b96-48ad-86bd-cba09588e6db"/>
+									<graphicElement>
+										<pen lineWidth="0.5" lineColor="#999999"/>
+									</graphicElement>
+								</rectangle>
+								<line>
+									<reportElement mode="Transparent" x="1" y="0" width="1" height="30" uuid="07fa28f4-1021-4d17-9fc6-62f077c44602"/>
+									<graphicElement>
+										<pen lineWidth="1.5"/>
+									</graphicElement>
+								</line>
+							</jr:columnFooter>
+							<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+								<rectangle>
+									<reportElement mode="Transparent" x="2" y="0" width="200" height="20" uuid="acb64c72-7287-4fc5-8e4b-288e5b647d64"/>
+									<graphicElement>
+										<pen lineWidth="0.5" lineColor="#999999"/>
+									</graphicElement>
+								</rectangle>
+								<textField pattern="" isBlankWhenNull="false">
+									<reportElement mode="Transparent" x="2" y="0" width="200" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="1997ad5d-469f-48a7-9ee7-23e9afef38d7"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+										<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+										<paragraph lineSpacing="Single" leftIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+								</textField>
+								<line>
+									<reportElement mode="Transparent" x="1" y="0" width="1" height="20" uuid="ad3960e1-4723-47ec-a46b-1fa0dc1bbc23"/>
+									<graphicElement>
+										<pen lineWidth="1.5"/>
+									</graphicElement>
+								</line>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="77" uuid="dea23b44-4b9a-4111-bbff-bd4aceeff252">
+							<jr:tableFooter height="30" rowSpan="1">
+								<rectangle>
+									<reportElement mode="Transparent" x="0" y="0" width="77" height="28" uuid="e75874fb-63a5-4168-a9c9-524a03e7c62a"/>
+									<graphicElement>
+										<pen lineWidth="0.5" lineColor="#999999"/>
+									</graphicElement>
+								</rectangle>
+								<textField pattern="#,##0.0 ¤ " isBlankWhenNull="false">
+									<reportElement mode="Transparent" x="0" y="0" width="77" height="28" forecolor="#000000" backcolor="#FFFFFF" uuid="41305522-2831-44d3-b114-b02bc1ba4ebb"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+										<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+										<paragraph lineSpacing="Single" rightIndent="3"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$P{totalEfectivo}-$V{totalGastos}]]></textFieldExpression>
+								</textField>
+								<line>
+									<reportElement mode="Transparent" x="76" y="0" width="1" height="28" uuid="9381c93c-ebd8-4041-afc2-91f5d918c6ab"/>
+									<graphicElement>
+										<pen lineWidth="1.5"/>
+									</graphicElement>
+								</line>
+								<line>
+									<reportElement mode="Transparent" x="0" y="28" width="77" height="1" uuid="f604165c-1019-440f-baa2-0e911a87cd2f"/>
+									<graphicElement>
+										<pen lineWidth="1.5"/>
+									</graphicElement>
+								</line>
+							</jr:tableFooter>
+							<jr:columnFooter height="30" rowSpan="1">
+								<textField pattern="#,##0.0 ¤ " isBlankWhenNull="false">
+									<reportElement mode="Transparent" x="0" y="0" width="77" height="30" forecolor="#000000" backcolor="#FFFFFF" uuid="8d584b3d-3ee6-403f-8a4e-2f034c64a0c3"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+										<font fontName="Arial" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+										<paragraph lineSpacing="Single" rightIndent="3"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{totalGastos}]]></textFieldExpression>
+								</textField>
+								<rectangle>
+									<reportElement mode="Transparent" x="0" y="0" width="77" height="30" uuid="8bbacaa8-3c78-4cae-a227-cdbd5e811dbf"/>
+									<graphicElement>
+										<pen lineWidth="0.5" lineColor="#999999"/>
+									</graphicElement>
+								</rectangle>
+								<line>
+									<reportElement mode="Transparent" x="76" y="0" width="1" height="30" uuid="2dc00776-22ca-4664-8c01-50c98200a3fc"/>
+									<graphicElement>
+										<pen lineWidth="1.5"/>
+									</graphicElement>
+								</line>
+							</jr:columnFooter>
+							<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+								<textField pattern="#,##0.0 ¤ " isBlankWhenNull="false">
+									<reportElement mode="Transparent" x="0" y="0" width="77" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="4fde6a49-460d-4e06-8d0c-9a09c6478c05"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+										<font fontName="Arial" size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+										<paragraph lineSpacing="Single" rightIndent="5"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+								</textField>
+								<rectangle>
+									<reportElement mode="Transparent" x="0" y="0" width="77" height="20" uuid="477cf990-2a88-4838-91c3-82f21c642fff"/>
+									<graphicElement>
+										<pen lineWidth="0.5" lineColor="#999999"/>
+									</graphicElement>
+								</rectangle>
+								<line>
+									<reportElement mode="Transparent" x="76" y="0" width="1" height="20" uuid="1d39ca1a-70e0-42be-9e8d-fabaf50cd02f"/>
+									<graphicElement>
+										<pen lineWidth="1.5"/>
+									</graphicElement>
+								</line>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+			<rectangle>
+				<reportElement mode="Transparent" x="1" y="40" width="202" height="20" forecolor="#999999" uuid="bd0ef571-6457-4e25-a08b-bdde9622aad8"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</summary>
+</jasperReport>

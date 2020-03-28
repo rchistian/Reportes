@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteComanda01" language="groovy" pageWidth="210" pageHeight="1210" columnWidth="210" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="bb42d78f-8b05-457e-85c7-0dd06544e509">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codigobarra" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombrelocal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="direccionlocal01" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="direccionlocal02" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CIF" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select tbldenominaciones.Denominacion,
+        tblcambiousuario.CodigoDia,
+        tblcambiousuario.FechaApertura,
+        tblcambiousuario.NombreUsuario,
+        tblcambiousuario.Cantidad,
+        tblcambiousuario.Cantidad * tbldenominaciones.Denominacion as Total,
+        tblimagenes.Imagen,
+        tblcambiousuario.DescripcionGaveta
+        from tbldenominaciones, tblcambiousuario, tblimagenes
+        where tblcambiousuario.EstadoRegistro = 'ACTIVO'
+        and tblcambiousuario.IDAbrirCajaUsuario = 48
+        and tblcambiousuario.CodigoDenominacion = tbldenominaciones.CodigoDenominacion
+        and tbldenominaciones.CodigoDenominacion = tblimagenes.IDCodigo
+        and tblcambiousuario.Cantidad > 0;]]>
+	</queryString>
+	<field name="Denominacion" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CodigoDia" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FechaApertura" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NombreUsuario" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cantidad" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Imagen" class="java.lang.Object">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DescripcionGaveta" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="sumTotal" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Total}]]></variableExpression>
+	</variable>
+	<variable name="sumCantidad" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{Cantidad}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="73" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement x="88" y="28" width="121" height="9" uuid="dca0815e-63c2-41f3-a27f-f43ac8c0f6fe"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FechaApertura}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="28" width="76" height="9" uuid="0a3904b9-49b6-48ce-82f6-9bfcf1f716f4"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Fecha Apertura:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="37" width="76" height="9" uuid="d9e7f891-0912-4109-9cbb-11c9f17da73a"/>
+				<textElement>
+					<font size="7" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Hora Apertura:]]></text>
+			</staticText>
+			<textField pattern="HH:mm" isBlankWhenNull="true">
+				<reportElement x="88" y="37" width="121" height="9" uuid="ad3a2d66-e28f-44c6-b5ab-ff7a77ba0c8e"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="46" width="76" height="9" uuid="a57c4e45-716c-4c96-ab0c-80cb152a0df2"/>
+				<textElement>
+					<font size="7" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Codigo Dia:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="88" y="46" width="121" height="9" uuid="38200a48-59f1-4d3a-aebe-b7929d207281"/>
+				<textElement textAlignment="Left">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CodigoDia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="2" width="194" height="20" uuid="a3865f36-74d6-4971-ade3-ee2a7b656d53"/>
+				<textElement textAlignment="Center">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[CAMBIO APERTURA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="55" width="76" height="9" uuid="e6882cff-cf87-4028-a43b-1eaa3bc2ff1f"/>
+				<textElement>
+					<font size="7" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Caja:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="88" y="55" width="121" height="9" uuid="5ce99ee8-d023-4f18-b5a4-401ddfff3b42"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DescripcionGaveta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="12" splitType="Stretch">
+			<rectangle>
+				<reportElement x="11" y="0" width="197" height="11" uuid="76c081ba-717f-4e36-9e23-8b55e606ffcf"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="11" y="0" width="60" height="11" uuid="2610bb4c-75e0-4c96-a74b-47b890973fdd"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Fracciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="0" width="80" height="11" uuid="5b83aaa7-b619-4954-9de8-dd8974ca8b74"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Denominacion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="149" y="0" width="60" height="11" uuid="52238a18-998d-45d7-873f-76ebbc8a7178"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="148" y="1" width="60" height="25" uuid="976a460f-fcd3-4b8d-825d-551a47d0a603"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{Total}-(int)$F{Total}!=0)?new DecimalFormat("##0.00").format($F{Total}):new DecimalFormat("##0").format($F{Total})]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealHeight" hAlign="Center" vAlign="Middle">
+				<reportElement x="69" y="1" width="80" height="25" uuid="ae31f683-bd96-4b49-a9dd-683eaf3772a7"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{Imagen})]]></imageExpression>
+			</image>
+			<textField pattern="###0">
+				<reportElement stretchType="RelativeToTallestObject" x="10" y="1" width="60" height="25" uuid="e7997f50-2cea-423b-a84f-3632d758bf30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="89" splitType="Stretch">
+			<componentElement>
+				<reportElement x="15" y="48" width="188" height="37" uuid="7a348916-c212-4848-94aa-60fc453eb506"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="2of7" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$P{codigobarra}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<line>
+				<reportElement x="9" y="28" width="200" height="1" uuid="7a43e090-c82f-4abc-8b09-fbcb6300e199"/>
+				<graphicElement>
+					<pen lineWidth="3.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="9" y="31" width="43" height="12" uuid="4418aefd-28d1-4231-928d-750263b1f664"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Le Atendio:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="52" y="31" width="157" height="12" uuid="c0f087cf-8bd2-48ca-b39a-34a0e1fde9c1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreUsuario}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="9" y="3" width="200" height="1" uuid="7cee745c-cb22-4c1f-8682-64ea7956dfc8"/>
+			</line>
+			<staticText>
+				<reportElement x="68" y="5" width="80" height="20" uuid="fe6d0e7d-d513-4f2d-8b04-5a53989e6af9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="147" y="5" width="60" height="20" uuid="e551edb5-249c-457b-8261-71c69bd097b8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{sumTotal}-(int)$V{sumTotal}!=0)?new DecimalFormat("##0.00").format($V{sumTotal}):new DecimalFormat("##0").format($V{sumTotal})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="5" width="60" height="20" uuid="36821df0-c6dc-473d-bece-ff008f137cd2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumCantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

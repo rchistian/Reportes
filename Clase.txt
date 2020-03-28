@@ -1,0 +1,122 @@
+    private void ReporteRecaudacionDia(){
+        Visor xVisorRecaudacionDia = new Visor();
+        ReporteRecaudacionDia("1", "1", xVisorRecaudacionDia.JPanel01);
+        xVisorRecaudacionDia.setVisible(true);        
+    }
+    
+
+    public void ReporteRecaudacionDia(final String idUsuario,final String idCodigoDia, final JPanel Panel) {        
+        Thread TreadImprimirRecaudacionDia = new Thread() {
+            @Override
+            public void run() {
+                ReporteRecaudacionDiaGlobal(idUsuario, idCodigoDia, Panel);
+            }
+        };
+        TreadImprimirRecaudacionDia.start();
+    }
+    
+
+    public void ReporteRecaudacionDiaGlobal(String idUsuario, String idCodigoDia, JPanel Panel) {
+        //int Respuesta = Lib_Msj.JMsgbox(this, "Desea Imprimir La Informacion?", "Imprimir", Lib_Msj.SI_NO);
+        //if (JOptionPane.YES_OPTION == Respuesta || JOptionPane.OK_OPTION == Respuesta) {
+        
+        try {
+            
+            String InSql = "Select "
+                         + "tbldenominaciones.Denominacion, "
+                         + "tblcambiousuario.CodigoDia, "
+                         + "tblcambiousuario.FechaCierre, "
+                         + "tblcambiousuario.NombreUsuario, "
+                         + "tblcambiousuario.Cantidad, "
+                         + "tblcambiousuario.Cantidad * tbldenominaciones.Denominacion as total, "
+                         + "tblimagenes.Imagen, "
+                         + "tblcambiousuario.DescripcionGaveta, "
+			 + "tblcambiousuario.Usuario "
+                         + "from tbldenominaciones, tblcambiousuario, tblimagenes "
+                         + "where tblcambiousuario.EstadoRegistro = 'ACTIVO' "
+                         + "and tblcambiousuario.IDUsuario = "+idUsuario+" "
+                         + "and tblcambiousuario.CodigoDia = "+idCodigoDia+" "
+                         + "and tblcambiousuario.CodigoDenominacion = tbldenominaciones.CodigoDenominacion "
+                         + "and tbldenominaciones.CodigoDenominacion = tblimagenes.IDCodigo "
+                         + "and tblcambiousuario.Cantidad > 0";
+
+            String InSql2 = "Select "
+                        + "(Select sum(tblfactura.total) from tblfactura where tblfactura.tipopago = 'EFECTIVO' and tblfactura.CodigoDia = "+idCodigoDia+" )  as FacturadoEfectivo, "
+                        + "(Select sum(tblfactura.total) from tblfactura where tblfactura.tipopago = 'VISA' and tblfactura.CodigoDia = "+idCodigoDia+" )  as FacturadoVisas, "
+                        + "(Select sum(tblfactura.total) from tblfactura where tblfactura.tipopago != 'EFECTIVO' and tblfactura.tipopago != 'VISA' and tblfactura.CodigoDia = "+idCodigoDia+" )  as FacturadoOtros, "
+                        + "(Select sum(tblfactura.total) from tblfactura where tblfactura.CodigoDia = "+idCodigoDia+" )  as TotalFacturado ,"
+                        + "(Select tblabrircajausuario.MontoApertura from tblabrircajausuario where tblabrircajausuario.EstadoRegistro = 'ACTIVO' and tblabrircajausuario.IDUsuario = "+idUsuario+" and tblabrircajausuario.CodigoDia = "+idCodigoDia+" )  as MontoApertura, "
+                        + "(Select tblabrircajausuario.DescripcionGaveta from tblabrircajausuario where tblabrircajausuario.EstadoRegistro = 'ACTIVO' and tblabrircajausuario.IDUsuario = "+idUsuario+" and tblabrircajausuario.CodigoDia = "+idCodigoDia+" )  as DescripcionGavetaCierre "
+                        + "from tblfactura LIMIT 1";
+            
+            System.out.println(InSql);
+            ResultSet resultSet = Main.CONEXION.Ejecutar_Sql(InSql);
+            JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(resultSet);
+            
+            System.out.println(InSql2);
+            ResultSet rs = Main.CONEXION.Ejecutar_Sql(InSql2);
+            ResultSetMetaData metadata = rs.getMetaData();
+            int columnCount = metadata.getColumnCount();   
+            JasperReport reporte = null;
+            reporte = (JasperReport) JRLoader.loadObjectFromFile("ReporteRecaudacionDia_02.jasper");
+
+            
+            //el codigo 1975 indica q el documento es tipo reserva
+            //String CodigoBarra = "2006" + Lib_String.Add_String_I(""+Huesped.getID(), '0', 10);  
+            String CodigoBarra = "200620062006";  
+            Map<String, Object> param = new HashMap<String, Object>();
+            param.put("nombrelocal", "STAY COPAS");
+            param.put("CIF", "B123456789"); 
+            //param.put("CIF", Empresa.getCif());
+            param.put("direccionlocal01", "ALBACETE");
+            param.put("direccionlocal02", "ALBACETE");
+            param.put("codigobarra", CodigoBarra);
+            
+            param.put("Gastos", 826.00);
+            param.put("EfectivoEntrega", 6000.00);
+            param.put("Diferencia", 45.00);
+            
+            
+            while (rs.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    System.out.println(metadata.getColumnName(i) + " = "+rs.getString(i));
+                    if (metadata.getColumnName(i).equals("DescripcionGavetaCierre")){
+                        param.put(metadata.getColumnName(i), rs.getString(i));
+                    }else{
+                        param.put(metadata.getColumnName(i), rs.getDouble(i)); 
+                    }
+                    
+                }
+                
+            }
+            
+            JasperPrint jasperprint = JasperFillManager.fillReport(reporte, param, resultSetDataSource);
+            
+            // visualiza la factura en el panel indicado siempre y cuando este
+            // no sea nulo y respete las espesificacioes
+            if (Panel == null) {
+                new Impresoras().setImpresora(jasperprint, false, Impresoras.IMPRESORA_DOCUMENTO);
+                //JasperPrintManager.printReport(jasperprint, false);
+            } else {
+                JRViewer VerReporte = new JRViewer(jasperprint);
+                
+                VerReporte.setOpaque(true);
+                VerReporte.setVisible(true);
+                VerReporte.setZoomRatio(Float.parseFloat("0.70"));
+                VerReporte.setSize(new Dimension(800, 600));
+                VerReporte.setLocation(0, 0);
+                
+                Panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+                Panel.add(VerReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
+                Panel.repaint();
+                Panel.revalidate();
+            }
+            
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null, e);
+            
+        }
+        
+      
+    }
+    
